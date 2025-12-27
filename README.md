@@ -18,7 +18,7 @@
 ## Requirements
 
 - TwinCAT PLC runtime
-- Zeugwerk-Framework (Trial License via [Zeugwerk Development Kit] works as well)
+- Zeugwerk-Framework (Trial License via [Zeugwerk Development Kit](https://github.com/Zeugwerk/Zeugwerk-Development-Kit) works as well)
 
 ## Example
 
