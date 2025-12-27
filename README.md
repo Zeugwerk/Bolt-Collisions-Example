@@ -31,9 +31,9 @@ When a collision risk is detected, typical avoidance strategies include stopping
 ``` st
 PROGRAM Example
 VAR_INPUT
-  _world : Bolt.CollisionWorld('C:\example\world.urdf, parent := Context);
+  _world  : Bolt.CollisionWorld('C:\example\world.urdf, parent := Context);
   _joint1 : Bolt.Joint('joint1');
-  _box1 : Bolt.Link('box1');
+  _box1   : Bolt.Link('box1');
 END_VAR
 
 // pass the position of the joint here
