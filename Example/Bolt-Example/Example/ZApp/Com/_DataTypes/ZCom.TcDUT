@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ZCom" Id="{9ecb853e-df32-4f3b-a2df-b7078a62f6ec}">
+    <Declaration><![CDATA[TYPE ZCom :
+STRUCT
+  // module context
+  App : ZApplication.ApplicationComPublish;
+  Alarming : ZApplication.AlarmingCom;
+  Messages : ZApplication.MessagingCom;
+  
+  // unit context
+  Unit : ZComUnit;
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

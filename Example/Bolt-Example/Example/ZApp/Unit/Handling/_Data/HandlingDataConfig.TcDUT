@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="HandlingDataConfig" Id="{ecc848f2-31be-4add-9eea-ab497f34bed5}">
+    <Declaration><![CDATA[/// configuration data that is used during boot to configure the Units equipment
+TYPE HandlingDataConfig :
+STRUCT
+  Simulated : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

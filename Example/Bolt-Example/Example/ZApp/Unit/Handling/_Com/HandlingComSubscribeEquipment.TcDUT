@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="HandlingComSubscribeEquipment" Id="{184fd791-b5a9-4ce3-af76-8a417f8472ab}">
+    <Declaration><![CDATA[TYPE HandlingComSubscribeEquipment :
+STRUCT
+
+{region "Axis1 : Axis"}
+  Axis1 : ZApplication.AxisComSubscribe;
+  {attribute 'ZId' := '09801a38-3b40-4e2a-9bae-a3364d79cde2'}
+{endregion}
+
+{region "Axis2 : Axis"}
+  Axis2 : ZApplication.AxisComSubscribe;
+  {attribute 'ZId' := 'c6998b19-1193-4c43-be6f-9513930630ee'}
+{endregion}
+
+{region "Axis3 : Axis"}
+  Axis3 : ZApplication.AxisComSubscribe;
+  {attribute 'ZId' := 'b0da3e42-5307-4a86-8fbe-ef9a8a9565df'}
+{endregion}
+
+{region "Axis4 : Axis"}
+  Axis4 : ZApplication.AxisComSubscribe;
+  {attribute 'ZId' := '3d0c07be-7a99-4475-b07d-495f47aebca4'}
+{endregion}
+
+{attribute '__ZwPlcUnitComDeclaration__'} // Do not remove this attribute! It is used for code generation.
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

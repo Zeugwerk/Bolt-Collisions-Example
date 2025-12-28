@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="HandlingSequenceGoHome" Id="{ac29735f-28b7-404c-839f-61a92bd8a1a0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK HandlingSequenceGoHome EXTENDS HandlingSequence IMPLEMENTS ZCore.ISequence
+VAR
+  _step : ZCore.Step(HandlingStep.GohomeBegin, HandlingStep.GohomeEnd);
+  _timer : ZAux.Timer;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT Busy THEN
+  RETURN;
+END_IF
+
+IF OnStart(_step) THEN
+  ; // init custom sequence variables here ...
+END_IF
+
+IF OnStop() THEN
+  RETURN; // external stop was triggered
+END_IF
+
+IF OnHalt() THEN
+  ; // Halting := TRUE; // Uncomment to acknowledge that the sequence is halting
+END_IF
+
+REPEAT
+  LogStep();
+
+  CASE _step.Index OF
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    HandlingStep.GoHomeBegin:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      IF _step.OnEntry()
+      THEN
+        _axis.Axis2.MoveAbsoluteAsync(THIS^, 0, 40);
+			END_IF
+      
+      Await(_axis.Axis2, nextStep:=HandlingStep.GoHomeJoint3);
+
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    HandlingStep.GoHomeJoint3:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      IF _step.OnEntry()
+      THEN
+        _axis.Axis3.MoveAbsoluteAsync(THIS^, 0, 40);
+			END_IF
+      
+      Await(_axis.Axis3, nextStep:=HandlingStep.GoHomeJoint12);
+      
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    HandlingStep.GoHomeJoint12:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      IF _step.OnEntry()
+      THEN
+        _axis.Axis1.MoveRelativeAsync(THIS^, 180, 40);
+        _axis.Axis2.MoveRelativeAsync(THIS^, 55, 40);
+			END_IF
+      
+      Await2(_axis.Axis1, _axis.Axis2 , nextStep:=HandlingStep.GoHomeJoint2);
+
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    HandlingStep.GoHomeJoint2:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      IF _step.OnEntry()
+      THEN
+        _axis.Axis3.MoveAbsoluteAsync(THIS^, 88, 40);
+			END_IF
+      
+      Await(_axis.Axis3 , nextStep:=HandlingStep.GoHomeEnd);
+      
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    HandlingStep.GoHomeEnd:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      SetBusy(FALSE);
+  
+  ELSE
+    Abort('sequence contains unhandled step');
+  END_CASE
+UNTIL _step.IsNotRepeatable() OR_ELSE NOT Busy END_REPEAT]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MoverSequenceAutomatic" Id="{615fad80-10aa-4341-b421-dcd57ea9fa21}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MoverSequenceAutomatic EXTENDS MoverSequence IMPLEMENTS ZCore.ISequence
+VAR
+  _step : ZCore.Step(MoverStep.AutomaticBegin, MoverStep.AutomaticEnd);
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT Busy THEN
+  RETURN;
+END_IF
+
+IF OnStart(_step) THEN
+  ; // init custom sequence variables here ...
+END_IF
+
+IF OnStop() THEN
+  RETURN; // external stop was triggered
+END_IF
+
+IF OnHalt() THEN
+  ; // Halting := TRUE; // Uncomment to acknowledge that the sequence is halting
+END_IF
+
+REPEAT
+  LogStep();
+
+  CASE _step.Index OF
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    MoverStep.AutomaticBegin:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      IF _step.OnEntry()
+      THEN
+        _axis.AxisX.MoveVelocityAsync(THIS^, 
+          SEL((_axis.AxisX.ActualPosition + _axis.AxisX.ActualFollowingError) < 0, -1, 1));
+      END_IF
+
+      IF (_axis.AxisX.ActualPosition < -1 AND_THEN _axis.AxisX.Parameter.Target.Velocity < 0)
+        OR_ELSE (_axis.AxisX.ActualPosition > 0  AND_THEN _axis.AxisX.Parameter.Target.Velocity > 0)
+      THEN
+        _step.SetNext(MoverStep.AutomaticBegin);
+        EXIT;
+      END_IF
+    
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    MoverStep.AutomaticEnd:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      SetBusy(FALSE);
+  
+  ELSE
+    Abort('sequence contains unhandled step');
+  END_CASE
+UNTIL _step.IsNotRepeatable() OR_ELSE NOT Busy END_REPEAT
+
+_collision.Box.SetPosition(1.45 + (_axis.AxisX.ActualPosition + _axis.AxisX.ActualFollowingError), 0.02, 0.05);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MoverUnit" Id="{36f49bd0-922f-450f-bf4b-1cd6bb45ae47}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MoverUnit EXTENDS ZApplication.Unit IMPLEMENTS IMover
+VAR
+  _equipment : MoverEquipment(THIS^);
+  _data : MoverDataRef;
+  _com : MoverComRef;
+
+  _boot : MoverSequenceBoot(THIS^);
+  _automatic : MoverSequenceAutomatic(THIS^);
+  _stop : MoverSequenceStop(THIS^);
+  _gohome : MoverSequenceGoHome(THIS^);
+  _faultReaction : MoverSequenceFaultReaction(THIS^);
+  
+  _statemachine : ZApplication.UnitStateMachine;
+
+  _observeTimer : ZAux.Timer;
+END_VAR
+
+{attribute 'ZId' := '673a347d-1adf-4db2-ba4b-4b1c8ade11cf'}]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_equipment.Collision.Box.SetPosition(1.45 + (_equipment.Axis.AxisX.ActualPosition + _equipment.Axis.AxisX.ActualFollowingError), 0.02, 0.05);
+
+IF _observeTimer.Done THEN
+  _observeTimer.WaitAsync(0.1);
+  
+  // monitor _com for requested actions (e.g. start homing, start automatic mode, ...)
+  ObserveRequest(_com.Subscribe.Request.Start, ZApplication.UnitStateMachineState.Automatic);
+  ObserveRequest(_com.Subscribe.Request.Stop, ZApplication.UnitStateMachineState.Stop);
+  ObserveRequest(_com.Subscribe.Request.GoHome, ZApplication.UnitStateMachineState.GoHome);
+  ObserveRequest(_com.Subscribe.Request.Halt, ZApplication.UnitStateMachineState.Halt);
+  
+  // provide relevant information via ADS
+  _com.Publish.Request.Stop := _stateMachine.IsTransitionAllowed(ZApplication.UnitStateMachineState.Stop);
+  _com.Publish.Request.Start := _stateMachine.IsTransitionAllowed(ZApplication.UnitStateMachineState.Automatic);
+  _com.Publish.Request.GoHome := _stateMachine.IsTransitionAllowed(ZApplication.UnitStateMachineState.GoHome);
+  _com.Publish.Request.Halt := _stateMachine.IsTransitionAllowed(ZApplication.UnitStateMachineState.Halt);
+
+  _com.Publish.State := _stateMachine.State();
+END_IF]]></ST>
+    </Implementation>
+    <Folder Name="UnitInterface" Id="{3df4b6e4-b3b0-4948-879d-feb21f4d9fc3}" />
+    <Method Name="FB_init" Id="{d830da5c-42f2-4072-b1e6-a5e6f4ad7502}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+  bInitRetains : BOOL;
+  bInCopyCode : BOOL;
+  parent : ZCore.IManagedObject;
+  displayName : ZCore.ZString;
+  configdata : REFERENCE TO MoverDataConfig;
+  machinedata : REFERENCE TO MoverDataMachine;
+  calibrationdata : REFERENCE TO MoverDataCalibration;
+  com : REFERENCE TO MoverCom;
+  logger : ZCore.ILogger;
+  alarming: ZApplication.IAlarming;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_name := displayName;
+
+// initialize local logger decorator
+_loggerDecorator.FB_init(bInitRetains, bInCopyCode, _name, logger);
+_alarmingDecorator.FB_init(bInitRetains, bInCopyCode, _name, alarming);
+
+// setup data
+_data.Config REF= configdata;
+_data.Machine REF= machinedata;
+_data.Calibration REF= calibrationdata;
+_com.Publish REF= com.Publish;
+_com.Subscribe REF= com.Subscribe;
+
+// ------- sequence initialization, map sequences of this unit to the statemachine -------
+{attribute '__ZwPlcUnitInitSequenceImplementation__'} // Do not remove this attribute! It is used for code generation.
+_statemachine.SetSequence(ZApplication.UnitStateMachineState.Boot, _boot);
+_statemachine.SetSequence(ZApplication.UnitStateMachineState.FaultReaction, _faultReaction);
+_statemachine.SetSequence(ZApplication.UnitStateMachineState.Gohome, _gohome);
+_statemachine.SetSequence(ZApplication.UnitStateMachineState.Stop, _stop);
+_statemachine.SetSequence(ZApplication.UnitStateMachineState.Automatic, _automatic);
+
+_statemachine.SetName(_name);
+_statemachine.SetLogger(_logger);
+
+// set initial state
+_statemachine.SetState(ZApplication.UnitStateMachineState.Boot);
+SetStateMachine(_statemachine);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

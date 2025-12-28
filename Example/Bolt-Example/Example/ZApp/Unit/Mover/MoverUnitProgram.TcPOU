@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MoverUnitProgram" Id="{2d94e6f7-3854-4fcc-9856-44c39216edfe}" SpecialFunc="None">
+    <Declaration><![CDATA[/// each unit can run in its own PROGRAM and Task, respectively. However, this is optional and one may also
+/// instantiate the unit in the ModuleProgram.
+/// In order to keep initialization to a minimum, all ModuleContext objects that are required by the Unit are
+/// given as FB_init parameter. These objects are
+/// * data structs
+/// * communication structs
+/// * busmaster(s)
+/// A unit should always be a root object (no parent) if it is running in its own context. If it runs in the same
+/// task as the Module the parent may be set to the Module's Application.
+PROGRAM MoverUnitProgram
+VAR
+{region "Mover1"}
+{undefine RunInSeparateProgram}
+{IF NOT (defined (Mover1_disabled)) AND (defined (RunInSeparateProgram))}
+  Mover1 : MoverUnit(displayName := 'Mover1', // name of the unit (for logging)
+    parent:= 0,
+    configdata := ZGlobal.Data.Config.Mover1,
+    machinedata := ZGlobal.Data.Machine.Mover1,
+    calibrationdata := ZGlobal.Data.Calibration.Mover1,
+    com := ZGlobal.Com.Unit.Mover1,
+    logger := Logger,
+    alarming:= Alarming);
+  {attribute 'section' := '__ZwPlcUnitProgramDeclaration__'}
+  {attribute 'ZId' := '0635b537-20e6-40de-ab4b-39921311b510'}
+{END_IF}
+{endregion}
+{attribute '__ZwPlcUnitProgramDeclaration__'} // Do not remove this attribute! It is used for code generation.
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// run the unit - the cylics of all children will be called as well
+
+{region "Mover1"}
+{undefine RunInSeparateProgram}
+{IF NOT (defined (Mover1_disabled)) AND (defined (RunInSeparateProgram))}
+  Mover1.Cyclic();
+  {attribute 'section' := '__ZwPlcUnitProgramImplementation__'}
+  {attribute 'ZId' := '0635b537-20e6-40de-ab4b-39921311b510'}
+{END_IF}
+{endregion}
+{attribute '__ZwPlcUnitProgramImplementation__'} // Do not remove this attribute! It is used for code generation.
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

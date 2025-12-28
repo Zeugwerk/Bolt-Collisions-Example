@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="MoverComRef" Id="{3c201314-99b3-4a6a-b49e-e1f38a9e1197}">
+    <Declaration><![CDATA[/// container for all communication data types that are used by the unit
+TYPE MoverComRef :
+STRUCT
+  Publish : REFERENCE TO MoverComPublish; 
+  Subscribe : REFERENCE TO MoverComSubscribe; 
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

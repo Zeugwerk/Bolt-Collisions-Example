@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="MoverDataConfig" Id="{eedda42a-aeda-4e01-b60e-934ee44ab470}">
+    <Declaration><![CDATA[/// configuration data that is used during boot to configure the Units equipment
+TYPE MoverDataConfig :
+STRUCT
+  Simulated : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

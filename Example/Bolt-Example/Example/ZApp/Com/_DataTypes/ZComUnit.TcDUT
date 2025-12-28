@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ZComUnit" Id="{072cf477-0f1d-483e-9a33-49a9226d2e6f}">
+    <Declaration><![CDATA[TYPE ZComUnit :
+STRUCT
+{region "Handling"}
+{IF NOT (defined (Handling_disabled))}
+  Handling : HandlingCom;
+  {attribute 'ZId' := 'a0dd13f9-743a-4c3b-9b43-ecc916834d10'}
+{END_IF}
+{endregion}
+{region "Mover1"}
+{IF NOT (defined (Mover1_disabled))}
+  Mover1 : MoverCom;
+  {attribute 'ZId' := '0635b537-20e6-40de-ab4b-39921311b510'}
+{END_IF}
+{endregion}
+{attribute '__ZwPlcApplicationComUnitDeclaration__'} // Do not remove this attribute! It is used for code generation.
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

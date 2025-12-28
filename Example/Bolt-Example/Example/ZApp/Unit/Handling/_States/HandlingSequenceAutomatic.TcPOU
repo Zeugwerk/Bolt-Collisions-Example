@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="HandlingSequenceAutomatic" Id="{552bc56a-59b7-47b5-836a-11e45fd5412a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK HandlingSequenceAutomatic EXTENDS HandlingSequence IMPLEMENTS ZCore.ISequence
+VAR
+  _step : ZCore.Step(HandlingStep.AutomaticBegin, HandlingStep.AutomaticEnd);
+  _avoidance : BOOL := TRUE;
+  _rt : ZAux.RealTime;
+  _otg : Struckig.Otg(0.010, 1);  
+  _pid : Pid(0.010);
+  _kp : LREAL := 3100;
+  _ki : LREAL := 2000;
+  _kd : LREAL := 0;
+  
+  _distance, _tableDistance : LREAL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT Busy THEN
+  RETURN;
+END_IF
+
+IF OnStart(_step) THEN
+  ; // init custom sequence variables here ...
+END_IF
+
+IF OnStop() THEN
+  RETURN; // external stop was triggered
+END_IF
+
+IF OnHalt() THEN
+  ; // Halting := TRUE; // Uncomment to acknowledge that the sequence is halting
+END_IF
+
+REPEAT
+  LogStep();
+
+  CASE _step.Index OF
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    HandlingStep.AutomaticBegin:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      IF _step.OnEntry()
+      THEN
+        _axis.Axis1.MoveVelocityAsync(THIS^, 50);
+		    _axis.Axis2.MoveAbsoluteAsync(THIS^, 60, 50);
+		    _axis.Axis3.MoveAbsoluteAsync(THIS^, 60, 50);
+      END_IF
+
+      IF _avoidance
+      THEN
+        Await2(obj1:=_axis.Axis2, obj2:=_axis.Axis3, nextStep:=HandlingStep.AutomaticSwitch);  
+      END_IF
+      
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    HandlingStep.AutomaticSwitch:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      IF _step.OnEntry()
+      THEN
+        _axis.Axis2.MoveInterpolatedVelocityAsync(THIS^);
+      END_IF
+
+      Await(obj1:=_axis.Axis2, nextStep:=HandlingStep.AutomaticMoveInterpolatedVelocity);  
+    
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    HandlingStep.AutomaticMoveInterpolatedVelocity:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      IF _step.OnEntry()
+      THEN
+        _otg.CycleTime := _rt.CycleTimeInSeconds();
+        _otg.ControlInterface := Struckig.ControlInterfaceType.Velocity;
+        _otg.Discretization := Struckig.DiscretizationType.Discrete;
+        _otg.EnableAutoPropagate := TRUE;  
+        _otg.Synchronization := Struckig.SynchronizationType.Phase;        
+        _otg.MaxJerk[0] := 100000;
+        _otg.MaxAcceleration[0] := 10000;
+        _otg.MaxVelocity[0] := 100;
+        
+        _otg.CurrentPosition[0] := _axis.Axis2.ActualPosition + _axis.Axis2.ActualFollowingError;
+        _otg.CurrentVelocity[0] := 0;
+        _otg.CurrentAcceleration[0] := 0;
+        _otg.TargetPosition[0] := 0; 
+        _otg.TargetVelocity[0] := 0; 
+        _otg.TargetAcceleration[0] := 0; 
+        
+        _otg();
+        
+        _pid.SetCycleTime(_rt.CycleTimeInSeconds());
+        _pid.SetControllerParametersParallel(_kp, _ki, _kd);
+        _pid.SetAntiWindupType(ZCore.PidAntiWindupType.ConditionalClamping);
+        _pid.SetSetPoint(00.05);
+        _pid.EnableAntiWindup(TRUE, -100, 100);
+      
+      ELSE
+        _tableDistance := _collision.World.FindMinimumDistanceByName('table');
+        _distance := MIN(_collision.World.FindMinimumDistanceByName('ee_link'), MIN(_collision.World.FindMinimumDistanceByName('link2'), _tableDistance));
+        _pid.SetInput(_distance);
+        
+        _pid.Cyclic();
+        _otg.TargetVelocity[0] := -_pid.Output();
+      END_IF  
+    
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    HandlingStep.AutomaticEnd:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      SetBusy(FALSE);
+  
+  ELSE
+    Abort('sequence contains unhandled step');
+  END_CASE
+UNTIL _step.IsNotRepeatable() OR_ELSE NOT Busy END_REPEAT
+
+
+IF _step.Index >= HandlingStep.AutomaticMoveInterpolatedVelocity
+THEN
+  _otg();
+  
+  IF _otg.State = Struckig.TrajectoryState.Error
+  THEN
+    Abort(_otg.ErrorMessage());
+  ELSE
+    _axis.Axis2.SetInterpolatedVelocity(THIS^, _otg.CurrentVelocity[0]);
+    
+    _collision.Joint1.SetPosition((_axis.Axis1.ActualPosition + _axis.Axis1.ActualFollowingError) / 180.0 * ZCore.Constants.Pi);
+    _collision.Joint2.SetPosition((_axis.Axis2.ActualPosition + _axis.Axis2.ActualFollowingError) / 180.0 * ZCore.Constants.Pi);    
+    _collision.Joint2.SetPosition((_otg.CurrentPosition[0]) / 180.0 * ZCore.Constants.Pi); // needed for simulation
+    _collision.Joint3.SetPosition((_axis.Axis3.ActualPosition + _axis.Axis3.ActualFollowingError) / 180.0 * ZCore.Constants.Pi);    
+	END_IF
+
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

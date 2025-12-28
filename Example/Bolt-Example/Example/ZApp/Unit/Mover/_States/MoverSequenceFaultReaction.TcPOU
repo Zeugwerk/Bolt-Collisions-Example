@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MoverSequenceFaultReaction" Id="{72f981b9-ce02-4f80-933e-2fb7337bed46}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MoverSequenceFaultReaction EXTENDS MoverSequence IMPLEMENTS ZCore.ISequence
+VAR
+  _step : ZCore.Step(MoverStep.FaultReactionBegin, MoverStep.FaultReactionEnd);
+  _timerSim : ZAux.Timer;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF OnStart(_step) THEN
+  ; // init custom sequence variables here ...
+END_IF
+
+REPEAT
+  LogStep();
+
+  CASE _step.Index OF
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    MoverStep.FaultReactionBegin:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+      IF _step.OnEntry()
+      THEN
+        _timerSim.WaitAsync(5);
+			END_IF
+      
+      Await(_timerSim, nextStep:=MoverStep.FaultReactionEnd);
+      // _step.SetNext(index:=MoverStep.FaultReactionEnd);
+
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)
+    MoverStep.FaultReactionEnd:
+    (* -------------------------------------------------------------------------------------------------------------------------------- *)    
+      SetBusy(FALSE);
+  
+  ELSE
+    Abort('sequence contains unhandled step');
+  END_CASE
+UNTIL _step.IsNotRepeatable() OR_ELSE NOT Busy END_REPEAT]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MoverEquipment" Id="{33e29232-b386-417e-81ca-2220c0df2fa2}" SpecialFunc="None">
+    <Declaration><![CDATA[/// This function block is a container for equipment that is used by this unit.
+/// Equipment is grouped by its kind (actuator, axes, io, ...).
+/// It extends from [ManagedObjectContainer](xref:ZCore.ManagedObjectContainer) such that the parent
+/// (= the unit itself) can be passed to equipment instances.
+FUNCTION_BLOCK MoverEquipment EXTENDS MoverContainer
+VAR_INPUT
+  Io : MoverIo(_parent);
+  Actuator : MoverActuator(_parent);
+  Axis : MoverAxis(_parent);
+  Collision : MoverCollision(_parent);
+  Fieldbus : MoverFieldbus(_parent);
+  Unit : MoverLinkedUnit(_parent);
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

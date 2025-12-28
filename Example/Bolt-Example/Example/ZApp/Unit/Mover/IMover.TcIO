@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="IMover" Id="{c2c45bc0-60bf-4f71-a6a2-cfead6528737}">
+    <Declaration><![CDATA[INTERFACE IMover EXTENDS ZApplication.IUnit
+]]></Declaration>
+  </Itf>
+</TcPlcObject>
