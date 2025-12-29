@@ -2,7 +2,7 @@
 
 
 <div align="center">
-<img width="384" height="256" alt="image" src="https://github.com/user-attachments/assets/e757a820-07a7-4982-a6df-6e3d4e35683f" />
+<img width="300" height="300" alt="Bolt_white" src="https://github.com/user-attachments/assets/74ba93dc-e87f-4406-a71e-7095d742c9ef" />
 </div>
 
 # Bolt
