@@ -1,0 +1,106 @@
+{
+  "fileversion": 1,
+  "solution": "Bolt-Example.sln",
+  "projects": [
+    {
+      "name": "Bolt-Example",
+      "plcs": [
+        {
+          "version": "1.0.0.0",
+          "distributor-name": null,
+          "name": "Example",
+          "title": "Example",
+          "type": "Application",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "1.7.22.1",
+              "references": [
+                "Bolt",
+                "ZApplication",
+                "ZAux",
+                "ZCore",
+                "ZEquipment",
+                "ZPlatform"
+              ],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [
+            {
+              "version": "0.15.5.0",
+              "name": "Struckig",
+              "branch": "main",
+              "target": "TC3.1",
+              "configuration": "Release",
+              "distributor-name": "Stefan Besler"
+            },
+            {
+              "version": "1.7.22.1",
+              "name": "ZApplication",
+              "branch": "main",
+              "target": "TC3.1",
+              "configuration": "Debug",
+              "distributor-name": "Zeugwerk GmbH"
+            },
+            {
+              "version": "1.7.22.1",
+              "name": "ZAux",
+              "branch": "main",
+              "target": "TC3.1",
+              "configuration": "Debug",
+              "distributor-name": "Zeugwerk GmbH"
+            },
+            {
+              "version": "1.7.22.1",
+              "name": "ZCore",
+              "branch": "main",
+              "target": "TC3.1",
+              "configuration": "Debug",
+              "distributor-name": "Zeugwerk GmbH"
+            },
+            {
+              "version": "1.7.22.1",
+              "name": "ZEquipment",
+              "branch": "main",
+              "target": "TC3.1",
+              "configuration": "Snapshot",
+              "distributor-name": "Zeugwerk GmbH"
+            },
+            {
+              "version": "1.7.22.1",
+              "name": "ZPlatform",
+              "branch": "main",
+              "target": "TC3.1",
+              "configuration": "Debug",
+              "distributor-name": "Zeugwerk GmbH"
+            }
+          ],
+          "references": {
+            "*": [
+              "Tc3_Module=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Example",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        }
+      ]
+    }
+  ],
+  "modules": []
+}
