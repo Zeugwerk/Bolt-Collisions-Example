@@ -1,0 +1,14 @@
+- name: Development
+  href: changelog.md
+- name: 'Release 1.6'
+  href: changelog_release_1_6.md
+- name: 'Release 1.4'
+  href: changelog_release_1_4.md
+- name: 'Release 1.2'
+  href: changelog_release_1_2.md
+- name: 'Release 1.0'
+  href: changelog_release_1_0.md
+- name: 'Release 0.9.0'
+  href: changelog_release_0_9_0.md
+- name: Upgrade CheatSheet to 1.6
+  href: upgrade_cheatsheet_1_6.md

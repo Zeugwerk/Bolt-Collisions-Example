@@ -1,0 +1,16 @@
+{
+    "version": "0.1.0.0",
+    "repositories":     [
+                {
+            "name": "Bolt",
+            "url": "https://github.com/Zeugwerk/Bolt.git"
+        },
+                {
+            "name": "Bolt-Release.",
+            "url": "https://github.com/Zeugwerk/Bolt-Release.git"
+        }
+    ],
+    "documentation":     [
+        "BoltLibrary"
+    ]
+}

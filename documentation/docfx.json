@@ -1,0 +1,39 @@
+{
+  "build": {
+    "content": [	
+      {
+        "files": [
+          "reference/**.md",
+          "reference/**/toc.yml", 
+        ]
+      },	  
+      {
+        "files": [
+          "userguide/**.md",
+          "userguide/**/*.md",
+          "userguide/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": ["images/**"]
+      }
+    ],
+    "output": "html",
+    "globalMetadataFiles": [
+      "metadata.json"
+    ],
+    "fileMetadataFiles": [],
+    "template": [
+      "default",
+      "modern",
+      "templates/zeugwerk",
+    ],
+    "postProcessors": [],
+    "keepFileLink": false,
+    "disableGitFeatures": false
+  }
+}
