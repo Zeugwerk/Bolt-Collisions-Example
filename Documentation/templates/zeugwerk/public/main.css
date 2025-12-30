@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
 
 :root {
-  --bs-primary-bg-subtle: #1b9bb8;
-  --bs-tertiary-bg: #0a1e47;
+  --bs-primary-bg-subtle: #f8c34b;
+  --bs-tertiary-bg: #f8c34b;
 
-  --bs-primary-border-subtle: #f8c34b;
-  --bs-link-hover-color: #f8c34b;
+  --bs-primary-border-subtle: #1b9bb8;
+  --bs-link-hover-color: #0a1e47;
   
   --bs-font-sans-serif: 'Roboto';
   --bs-border-radius: 10px;
