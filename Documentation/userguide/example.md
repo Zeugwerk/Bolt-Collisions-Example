@@ -38,9 +38,8 @@ END_IF
 
 ---
 
-```urdf
-C:\example\world.urdf
---------------------------------------------------------------------------------
+```xml
+<!-- C:\example\world.urdf -->
 <?xml version="1.0"?>
 <robot name="collision_demo">
 
