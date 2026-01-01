@@ -12,6 +12,9 @@
           "userguide/**.md",
           "userguide/**/*.md",
           "userguide/**/toc.yml",
+          "changelog/**.md",
+          "changelog/**/*.md",
+          "changelog/**/toc.yml",          
           "toc.yml",
           "*.md"
         ]

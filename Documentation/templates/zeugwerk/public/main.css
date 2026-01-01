@@ -1,14 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
 
 :root {
-  --bs-primary-bg-subtle: #f8c34b;
-  --bs-tertiary-bg: #f8c34b;
+ 
+  --bs-primary-bg-subtle: #0A4E8A;
+  --bs-tertiary-bg: #0A4E8A;
 
-  --bs-primary-border-subtle: #1b9bb8;
-  --bs-link-hover-color: #0a1e47;
+  --bs-primary-border-subtle: #000000;
+  --bs-link-hover-color: #FFC107;
   
   --bs-font-sans-serif: 'Roboto';
   --bs-border-radius: 10px;
+  
+  --bs-nav-link-color: #000000;
 
   --border-radius-button: 40px;
   --card-box-shadow: 0 1px 2px 0 #3d41440f, 0 1px 3px 1px #3d414429;
@@ -334,11 +337,11 @@ img {
 }
 
 .navbar-brand, .navbar-brand:hover {
-  color: #f6f1ee;
+  color: #FF8F00;
 }
 
 .dropdown-toggle {
-  color: #f6f1ee;
+  color: #FF8F00;
 }
 
 [data-bs-theme='light'] nav.navbar {
@@ -352,19 +355,19 @@ img {
 [data-bs-theme='light'] .navbar-nav > li > a {
   border-radius: var(--border-radius-button);
   transition: 200ms;
-  color: #f6f1ee; 
+  color: #FF8F00; 
 }
 
 [data-bs-theme='dark'] .navbar-nav > li > a {
   border-radius: var(--border-radius-button);
   transition: 200ms;
-  color: #f6f1ee; 
+  color: #FF8F00; 
 }
 
 .navbar-nav a.nav-link:focus,
 .navbar-nav a.nav-link:hover {
   background-color: var(--bs-primary-border-subtle);
-  color: #f6f1ee; 
+  color: #FF8F00;
 }
 
 .navbar-nav .nav-link.active,
