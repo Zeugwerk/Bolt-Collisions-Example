@@ -3,7 +3,8 @@
   Your browser does not support the video tag.
 </video>
 
-# Bolt
+<br/>
+<br/>
 
 **Bolt** provides **real-time collision detection and avoidance** in industrial automation applications. It allows PLCs to communicate with a physics engine to obtain detailed information about moving objects and their environment, enabling dynamic trajectory management and motion coordination. It supports
 
