@@ -1,3 +1,5 @@
+- name: Userguide
+  href: userguide/
 - name: API Reference
   href: reference/
 - name: Changelog
