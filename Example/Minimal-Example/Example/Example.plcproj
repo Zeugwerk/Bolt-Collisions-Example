@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{50ab0715-55c5-49a4-9cc0-54e2e10af020}</ProjectGuid>
+    <SubObjectsSortedByName>true</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>false</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>Example</Name>
+    <ProgramVersion>3.1.4026.18</ProgramVersion>
+    <Application>{5caaf839-7b64-4ff8-89c7-92154e86150e}</Application>
+    <TypeSystem>{d8833618-e184-4cf4-a3f3-ac6a01fdf8aa}</TypeSystem>
+    <Implicit_Task_Info>{4cb4d088-cb41-416a-9060-940b89778057}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{37f20c7d-429d-4188-8675-44165220eb19}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{af7479ed-6cc4-463d-9f8b-8ce8d8fd8175}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{2918dffd-8ed4-4d57-9f52-46a7b2553c1f}</LibraryReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DUTs" />
+    <Folder Include="GVLs" />
+    <Folder Include="VISUs" />
+    <Folder Include="POUs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Bolt">
+      <DefaultResolution>Bolt, * (Zeugwerk GmbH)</DefaultResolution>
+      <Namespace>Bolt</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+      <SystemLibrary>true</SystemLibrary>
+    </PlaceholderReference>
+    <PlaceholderReference Include="ZApplication">
+      <DefaultResolution>ZApplication, * (Zeugwerk GmbH)</DefaultResolution>
+      <Namespace>ZApplication</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="ZAux">
+      <DefaultResolution>ZAux, * (Zeugwerk GmbH)</DefaultResolution>
+      <Namespace>ZAux</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="ZCore">
+      <DefaultResolution>ZCore, * (Zeugwerk GmbH)</DefaultResolution>
+      <Namespace>ZCore</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="ZEquipment">
+      <DefaultResolution>ZEquipment, * (Zeugwerk GmbH)</DefaultResolution>
+      <Namespace>ZEquipment</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="ZPlatform">
+      <DefaultResolution>ZPlatform, * (Zeugwerk GmbH)</DefaultResolution>
+      <Namespace>ZPlatform</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderResolution Include="ZApplication">
+      <Resolution>ZApplication, 1.7.22.1 (Zeugwerk GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="ZAux">
+      <Resolution>ZAux, 1.7.22.1 (Zeugwerk GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="ZCore">
+      <Resolution>ZCore, 1.7.22.1 (Zeugwerk GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="ZEquipment">
+      <Resolution>ZEquipment, 1.7.22.1 (Zeugwerk GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="ZPlatform">
+      <Resolution>ZPlatform, 1.7.22.1 (Zeugwerk GmbH)</Resolution>
+    </PlaceholderResolution>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Example.tmc">
+      <SubType>Content</SubType>
+    </None>
+  </ItemGroup>
+  <ProjectExtensions>
+    <PlcProjectOptions>
+      <XmlArchive>
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
+      <v n="Name">"&lt;ProjectRoot&gt;"</v>
+      <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
+        <o>
+          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" />
+        </o>
+        <v>{246001F4-279D-43AC-B241-948EB31120E1}</v>
+        <o>
+          <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" />
+        </o>
+        <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>
+        <o>
+          <v n="Name">"{29BD8D0C-3586-4548-BB48-497B9A01693F}"</v>
+          <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+            <v>NamingConventions</v>
+            <o>
+              <v n="Name">"NamingConventions"</v>
+              <d n="SubKeys" t="Hashtable" />
+              <d n="Values" t="Hashtable" />
+            </o>
+            <v>Rules</v>
+            <o>
+              <v n="Name">"Rules"</v>
+              <d n="SubKeys" t="Hashtable" />
+              <d n="Values" t="Hashtable" />
+            </o>
+          </d>
+          <d n="Values" t="Hashtable" />
+        </o>
+        <v>{40450F57-0AA3-4216-96F3-5444ECB29763}</v>
+        <o>
+          <v n="Name">"{40450F57-0AA3-4216-96F3-5444ECB29763}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" />
+        </o>
+        <v>{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}</v>
+        <o>
+          <v n="Name">"{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>WriteLineIDs</v>
+            <v>False</v>
+          </d>
+        </o>
+        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
+        <o>
+          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>DisabledWarningIds</v>
+            <v>410,5410</v>
+          </d>
+        </o>
+        <v>{F66C7017-BDD8-4114-926C-81D6D687E35F}</v>
+        <o>
+          <v n="Name">"{F66C7017-BDD8-4114-926C-81D6D687E35F}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>CalcActiveTransOnly</v>
+            <v>True</v>
+          </d>
+        </o>
+      </d>
+      <d n="Values" t="Hashtable" />
+    </o>
+  </Data>
+  <TypeList>
+    <Type n="Boolean">System.Boolean</Type>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
+    </PlcProjectOptions>
+  </ProjectExtensions>
+</Project>

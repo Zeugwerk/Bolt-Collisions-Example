@@ -7,17 +7,23 @@ The scene is updated asynchronously, and the minimum distance to a link is monit
 When a collision risk is detected, typical avoidance strategies include stopping the motion, slowing down based on distance, rerouting the trajectory, or using a distance-based controller to keep a safe separation from obstacles.
 
 ```std
-PROGRAM Example
+PROGRAM MAIN
 VAR_INPUT
   _context : ZApplication.Context(displayName := 'Simple-Bolt-Example');
   _axis1 : ZEquipment.AxisSimulated(parent := _context);
-  _world  : Bolt.CollisionWorld('C:\example\world.urdf', parent := _context);
-  _joint1 : Bolt.Joint('joint1');
-  _box1   : Bolt.Link('link1');
+  _world  : Bolt.CollisionWorld(parent := _context, urdfFilename := 'C:\example\world.urdf', );
+  _joint1 : Bolt.Joint(name := 'joint1',  world := _world);
+  _box1 : Bolt.Link(name := 'link1', world := _world);  
 END_VAR
 ```
 ```sti
-context.Cyclic();
+_context.Cyclic();
+
+// wait until application is ready
+IF NOT _context.Booted
+THEN
+  RETURN;
+END_IF
 
 // pass the position of the joint here
 _joint1.SetPosition(_axis1.ActualPosition);
@@ -26,11 +32,11 @@ _joint1.SetPosition(_axis1.ActualPosition);
 // and check for collisions, calculate normal collision distances
 IF NOT _world.Busy
 THEN
-  _world.UpdateAndCheckWholeSceneAsync(startToken := 0);
+  _world.UpdateAndCheckSceneAsync(startToken := 0);
 END_IF
 
 // check for incoming collisions and react
-IF _box1.FindMinimumDistance() < 0.005
+IF _box1.MinimumDistance < 0.005
 THEN
   ; // collision is imminent, counter-measures (stop, avoid, use distance controller, ...) here
 END_IF
