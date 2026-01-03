@@ -205,7 +205,7 @@ function createMesh(link){
 }
 
 // ================= WebSocket =================
-const ws = new WebSocket("ws://192.168.178.39:55735/ws");
+const ws = new WebSocket("ws://localhost:55735/ws");
 
 ws.onmessage = ev=>{
   const state = JSON.parse(ev.data);
