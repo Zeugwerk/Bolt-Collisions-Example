@@ -205,7 +205,7 @@ function createMesh(link){
 }
 
 // ================= WebSocket =================
-const ws = new WebSocket("ws://192.168.178.36:25735/ws");
+const ws = new WebSocket("ws://192.168.178.39:55735/ws");
 
 ws.onmessage = ev=>{
   const state = JSON.parse(ev.data);
@@ -251,7 +251,7 @@ ws.onmessage = ev=>{
     }
 
     // --- Proximity hull ---
-    if(c.Distance < 0.1){
+    if(c.Distance < 0.01){
       const obj = objects.get(c.A);
       if(!obj) return;
 
@@ -265,7 +265,7 @@ ws.onmessage = ev=>{
     }
 
     // --- Proximity hull ---
-    if(c.Distance < 0.1){
+    if(c.Distance < 0.01){
       const obj = objects.get(c.B);
       if(!obj) return;
 

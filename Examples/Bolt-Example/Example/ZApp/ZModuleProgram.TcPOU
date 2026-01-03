@@ -14,7 +14,7 @@ VAR_INPUT
   LoggerHmi : ZApplication.Messaging(App, datetime := Datetime, com := ZGlobal.Com.Messages);
   LoggerFile : ZAux.LoggerFile7FF(App, datetime := Datetime, filePath:='C:\Zeugwerk\logs\messages.log', target:='');
   Logger : ZAux.Logging;
-  World : Bolt.CollisionWorld(App, 'E:\Bolt-Release\Example\world.urdf');
+  World : Bolt.CollisionWorld(App, 'C:\Program Files (x86)\Zeugwerk GmbH\Bolt\Examples\world.urdf');
   {attribute 'ZId' := ''}
 {endregion}  
 {attribute '__ZwPlcApplicationModuleProgramDeclaration__'} // Do not remove this attribute! It is used for code generation.

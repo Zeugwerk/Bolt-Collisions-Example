@@ -21,7 +21,7 @@ THEN
 END_IF
 
 World REF= ZModuleProgram.World;
-Box.SetCollisionFilter(group := 1, mask := 2#11111101);
+Box.SetCollisionFilter(layer := 1, mask := 2#11111101);
 
 _isInitialized := TRUE;]]></ST>
     </Implementation>

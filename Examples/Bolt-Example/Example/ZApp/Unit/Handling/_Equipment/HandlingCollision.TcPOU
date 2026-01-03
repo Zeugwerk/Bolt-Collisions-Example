@@ -23,9 +23,9 @@ THEN
 END_IF
 
 World REF= ZModuleProgram.World;
-Joint1.SetCollisionFilter(group := 1, mask := 2#11111101);
-Joint2.SetCollisionFilter(group := 1, mask := 2#11111101);
-Joint3.SetCollisionFilter(group := 1, mask := 2#11111101);
+Joint1.SetCollisionFilter(layer := SHL(1, 3), mask := NOT SHL(1, 3));
+Joint2.SetCollisionFilter(layer := SHL(1, 3), mask := NOT SHL(1, 3));
+Joint3.SetCollisionFilter(layer := SHL(1, 3), mask := NOT SHL(1, 3));
 
 _isInitialized := TRUE;]]></ST>
     </Implementation>
