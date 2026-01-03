@@ -14,7 +14,7 @@ VAR_INPUT
   LoggerHmi : ZApplication.Messaging(App, datetime := Datetime, com := ZGlobal.Com.Messages);
   LoggerFile : ZAux.LoggerFile7FF(App, datetime := Datetime, filePath:='C:\Zeugwerk\logs\messages.log', target:='');
   Logger : ZAux.Logging;
-  World : Bolt.CollisionWorld(App, 'E:\Bullcat\Example\world.urdf');
+  World : Bolt.CollisionWorld(App, 'E:\Bolt-Release\Example\world.urdf');
   {attribute 'ZId' := ''}
 {endregion}  
 {attribute '__ZwPlcApplicationModuleProgramDeclaration__'} // Do not remove this attribute! It is used for code generation.
@@ -53,7 +53,7 @@ END_VAR
       <ST><![CDATA[// do collision detection for whole machine
 IF NOT World.Busy
 THEN
-  World.UpdateAndCheckSceneAsync();
+  World.UpdateAndCheckSceneAsync(startToken := 0);
 END_IF
 
 {region "ZModuleProgram : Utility"}

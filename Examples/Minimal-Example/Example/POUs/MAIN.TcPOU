@@ -5,7 +5,7 @@
 VAR
   _context : ZApplication.Context(displayName := 'Simple-Bolt-Example');
   _axis1 : ZEquipment.AxisSimulated(parent := _context);
-  _world  : Bolt.CollisionWorld(parent := _context, urdfFilename := 'C:\example\world.urdf', );
+  _world  : Bolt.CollisionWorld(parent := _context, urdfFilename := 'E:\Bolt-Release\Example\world.urdf', );
   _joint1 : Bolt.Joint(name := 'joint1',  world := _world);
   _box1 : Bolt.Link(name := 'link1', world := _world);  
 END_VAR
